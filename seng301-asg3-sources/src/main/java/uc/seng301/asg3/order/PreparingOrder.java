@@ -44,7 +44,6 @@ import uc.seng301.asg3.packaging.PackagingType;
  */
 public class PreparingOrder extends Order {
 
-  private final PrepareStrategy prepareStrategy;
   private final HollowEggFactory hollowEggFactory;
   private final StuffedEggFactory stuffedEggFactory;
   private ExecutorService executor;
@@ -72,7 +71,27 @@ public class PreparingOrder extends Order {
    */
   @Override
   public void prepare() {
+
     executor = Executors.newFixedThreadPool(3);
+
+    switch (packagingType.id()){
+
+//      case(1): RegularBoxPrepare regularBoxPrepare = new RegularBoxPrepare(packaging, hollowEggFactory, stuffedEggFactory, stuffed, chocolateType, containsAlcohol);
+//                regularBoxPrepare.prepareBox();
+      case(1): RegularBoxPrepare regularBoxPrepare = new RegularBoxPrepare();
+                regularBoxPrepare.prepareBox(packaging, hollowEggFactory, stuffedEggFactory, stuffed, chocolateType, containsAlcohol);
+                break;
+//      case(2): MixedBoxPrepare mixedBoxPrepare = new MixedBoxPrepare(packaging, hollowEggFactory, stuffedEggFactory, stuffed, containsAlcohol);
+//                mixedBoxPrepare.prepareBox();
+//                break;
+//      case(3): RegularHollowEggPrepare regularHollowEggPrepare = new RegularHollowEggPrepare(packagingType, hollowEggFactory, stuffedEggFactory, stuffed, chocolateType, containsAlcohol);
+//                regularHollowEggPrepare.prepareBox();
+//                break;
+//      case(4): MixedHollowEggPrepare mixedHollowEggPrepare = new MixedHollowEggPrepare(packagingType, hollowEggFactory, stuffedEggFactory, stuffed, containsAlcohol);
+//                mixedHollowEggPrepare.prepareBox();
+//                break;
+
+    }
     if (PackagingType.isHollowEggPackaging(packagingType)) {
       packaging.addChocolateEgg(produceEgg(hollowEggFactory, randomChocolateType(), false));
     }
