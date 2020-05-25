@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uc.seng301.asg3.egg</OriginalElement>
+  <nodes>
+    <node x="353.8972666808934" y="452.0">uc.seng301.asg3.packaging.Packaging</node>
+    <node x="1404.0639333475601" y="653.0">uc.seng301.asg3.egg.StuffedEggFactory</node>
+    <node x="257.29267143263667" y="1172.0">uc.seng301.asg3.order.Counter</node>
+    <node x="59.3125" y="1068.0">uc.seng301.asg3.order.Chocolatier</node>
+    <node x="1536.130681818182" y="474.0">uc.seng301.asg3.egg.StuffedChocolateEgg</node>
+    <node x="745.255681818182" y="1340.0">uc.seng301.asg3.App</node>
+    <node x="192.44382380139416" y="642.0">uc.seng301.asg3.order.Order</node>
+    <node x="884.5271571347276" y="664.0">uc.seng301.asg3.egg.HollowEggFactory</node>
+    <node x="1655.7973484848485" y="221.0">uc.seng301.asg3.ingredient.Filling</node>
+    <node x="254.61493811353012" y="210.0">uc.seng301.asg3.packaging.PackagingType</node>
+    <node x="616.0926714326365" y="810.0">uc.seng301.asg3.order.PreparingOrder</node>
+    <node x="1225.130681818182" y="452.0">uc.seng301.asg3.egg.HollowChocolateEgg</node>
+    <node x="1759.2441865841517" y="22.0">uc.seng301.asg3.ingredient.Ingredient</node>
+    <node x="787.2771571347276" y="485.0">uc.seng301.asg3.egg.ChocolateEggFactory</node>
+    <node x="998.9274381135301" y="0.0">uc.seng301.asg3.egg.ChocolateType</node>
+    <node x="991.8196151657421" y="221.0">uc.seng301.asg3.egg.ChocolateEgg</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uc.seng301.asg3.ingredient.Filling" target="uc.seng301.asg3.ingredient.Ingredient">
+      <point x="-56.0" y="-60.0" />
+      <point x="1711.7973484848485" y="190.0" />
+      <point x="1799.4941865841517" y="190.0" />
+      <point x="-40.25" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Order" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="-107.0" y="-49.0" />
+      <point x="299.44382380139416" y="612.0" />
+      <point x="244.11493811353012" y="612.0" />
+      <point x="244.11493811353012" y="150.0" />
+      <point x="1027.836529022621" y="150.0" />
+      <point x="-77.09090909090912" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Chocolatier" target="uc.seng301.asg3.packaging.Packaging">
+      <point x="-66.75" y="-27.0" />
+      <point x="126.0625" y="622.0" />
+      <point x="387.7722666808934" y="622.0" />
+      <point x="-101.625" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowChocolateEgg" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="109.12500000000006" y="-60.0" />
+      <point x="1479.755681818182" y="432.0" />
+      <point x="1418.6264333475601" y="432.0" />
+      <point x="1418.6264333475601" y="180.0" />
+      <point x="1143.4728926589846" y="180.0" />
+      <point x="38.545454545454504" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowEggFactory" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="46.0" y="-27.0" />
+      <point x="1114.5271571347275" y="622.0" />
+      <point x="1165.7771571347275" y="622.0" />
+      <point x="1165.7771571347275" y="432.0" />
+      <point x="1110.8650697111966" y="432.0" />
+      <point x="-26.454545454545496" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.ingredient.Filling">
+      <point x="92.0" y="-38.0" />
+      <point x="1680.0639333475601" y="612.0" />
+      <point x="1829.2973484848485" y="612.0" />
+      <point x="1829.2973484848485" y="432.0" />
+      <point x="1851.7973484848485" y="432.0" />
+      <point x="84.0" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.egg.HollowEggFactory">
+      <point x="121.36363636363626" y="-104.0" />
+      <point x="959.9563077962728" y="770.0" />
+      <point x="1068.5271571347275" y="770.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Counter" target="uc.seng301.asg3.order.Order">
+      <point x="0.0" y="-49.0" />
+      <point x="342.79267143263667" y="1147.0" />
+      <point x="336.8125" y="1147.0" />
+      <point x="336.8125" y="790.0" />
+      <point x="245.94382380139416" y="790.0" />
+      <point x="-160.5" y="49.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.order.Counter">
+      <point x="-55.55555555555543" y="-93.0" />
+      <point x="814.7001262626266" y="1300.0" />
+      <point x="300.04267143263667" y="1300.0" />
+      <point x="-42.75" y="49.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.order.Chocolatier">
+      <point x="-83.33333333333326" y="-93.0" />
+      <point x="786.9223484848487" y="1310.0" />
+      <point x="125.59267143263662" y="1310.0" />
+      <point x="125.59267143263662" y="1147.0" />
+      <point x="103.8125" y="1147.0" />
+      <point x="-89.0" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.egg.StuffedEggFactory">
+      <point x="161.81818181818176" y="-104.0" />
+      <point x="1000.4108532508183" y="780.0" />
+      <point x="1465.3972666808936" y="780.0" />
+      <point x="-122.66666666666669" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Order" target="uc.seng301.asg3.packaging.PackagingType">
+      <point x="-35.66666666666674" y="-49.0" />
+      <point x="370.7771571347274" y="612.0" />
+      <point x="315.84410478019663" y="612.0" />
+      <point x="315.84410478019663" y="432.0" />
+      <point x="330.6149381135301" y="432.0" />
+      <point x="-76.0" y="71.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.packaging.Packaging" target="uc.seng301.asg3.packaging.PackagingType">
+      <point x="-33.875" y="-60.0" />
+      <point x="455.5222666808934" y="432.0" />
+      <point x="482.6149381135301" y="432.0" />
+      <point x="76.0" y="71.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="153.33333333333337" y="-38.0" />
+      <point x="1741.3972666808936" y="622.0" />
+      <point x="1890.2973484848485" y="622.0" />
+      <point x="1890.2973484848485" y="160.0" />
+      <point x="1182.0183472044391" y="160.0" />
+      <point x="77.09090909090912" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.ChocolateEggFactory" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="-92.0" y="-27.0" />
+      <point x="879.2771571347276" y="402.0" />
+      <point x="827.5625000000001" y="402.0" />
+      <point x="827.5625000000001" y="180.0" />
+      <point x="1085.6547108408029" y="180.0" />
+      <point x="-19.272727272727252" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedChocolateEgg" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="-40.0" y="-38.0" />
+      <point x="1596.130681818182" y="372.0" />
+      <point x="1269.5923424384694" y="372.0" />
+      <point x="132.27272727272725" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="-40.454545454545496" y="-104.0" />
+      <point x="798.138125978091" y="780.0" />
+      <point x="754.3125000000001" y="780.0" />
+      <point x="754.3125000000001" y="160.0" />
+      <point x="1047.1092562953481" y="160.0" />
+      <point x="-57.81818181818187" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.packaging.PackagingType">
+      <point x="-111.11111111111109" y="-93.0" />
+      <point x="759.1445707070709" y="1320.0" />
+      <point x="11.0" y="1320.0" />
+      <point x="11.0" y="432.0" />
+      <point x="279.9482714468634" y="432.0" />
+      <point x="-126.66666666666674" y="71.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.packaging.Packaging">
+      <point x="-121.36363636363626" y="-104.0" />
+      <point x="717.2290350690002" y="770.0" />
+      <point x="660.3396571347275" y="770.0" />
+      <point x="660.3396571347275" y="622.0" />
+      <point x="591.0222666808934" y="622.0" />
+      <point x="101.625" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.ChocolateEgg" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="-72.75" y="-60.0" />
+      <point x="1064.569615165742" y="190.0" />
+      <point x="1104.9274381135301" y="190.0" />
+      <point x="0.0" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Order" target="uc.seng301.asg3.packaging.Packaging">
+      <point x="178.33333333333326" y="-49.0" />
+      <point x="584.7771571347274" y="622.0" />
+      <point x="523.2722666808934" y="622.0" />
+      <point x="33.875" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedChocolateEgg" target="uc.seng301.asg3.ingredient.Filling">
+      <point x="80.0" y="-38.0" />
+      <point x="1716.130681818182" y="432.0" />
+      <point x="1739.7973484848485" y="432.0" />
+      <point x="-28.0" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowChocolateEgg" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="-109.125" y="-60.0" />
+      <point x="1261.505681818182" y="412.0" />
+      <point x="1163.7741606202876" y="412.0" />
+      <point x="26.454545454545496" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.order.PreparingOrder">
+      <point x="27.77777777777783" y="-93.0" />
+      <point x="898.0334595959598" y="1320.0" />
+      <point x="881.255681818182" y="1320.0" />
+      <point x="881.255681818182" y="1048.0" />
+      <point x="1005.4676714326365" y="1048.0" />
+      <point x="166.875" y="104.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowEggFactory" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="-138.0" y="-27.0" />
+      <point x="930.5271571347276" y="612.0" />
+      <point x="765.3125000000001" y="612.0" />
+      <point x="765.3125000000001" y="170.0" />
+      <point x="1066.3819835680756" y="170.0" />
+      <point x="-38.545454545454504" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.egg.HollowEggFactory">
+      <point x="55.55555555555566" y="-93.0" />
+      <point x="925.8112373737376" y="1300.0" />
+      <point x="1280.2973484848485" y="1300.0" />
+      <point x="1280.2973484848485" y="770.0" />
+      <point x="1191.1938238013943" y="770.0" />
+      <point x="122.66666666666663" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Counter" target="uc.seng301.asg3.order.Chocolatier">
+      <point x="-68.40000000000009" y="-49.0" />
+      <point x="274.3926714326366" y="1147.0" />
+      <point x="192.8125" y="1147.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.order.Order">
+      <point x="-202.27272727272725" y="-104.0" />
+      <point x="636.3199441599093" y="790.0" />
+      <point x="459.94382380139416" y="790.0" />
+      <point x="53.5" y="49.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.packaging.Packaging" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="101.625" y="-60.0" />
+      <point x="591.0222666808934" y="422.0" />
+      <point x="1031.5014333475604" y="422.0" />
+      <point x="-105.81818181818176" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedChocolateEgg" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="0.0" y="-38.0" />
+      <point x="1636.130681818182" y="170.0" />
+      <point x="1162.745619931712" y="170.0" />
+      <point x="57.81818181818187" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.egg.StuffedChocolateEgg">
+      <point x="-30.666666666666686" y="-38.0" />
+      <point x="1557.3972666808936" y="592.0" />
+      <point x="1636.130681818182" y="592.0" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="0.0" y="-104.0" />
+      <point x="838.5926714326365" y="770.0" />
+      <point x="776.7771571347276" y="770.0" />
+      <point x="776.7771571347276" y="432.0" />
+      <point x="1057.9559788021056" y="432.0" />
+      <point x="-79.36363636363637" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="-92.00000000000011" y="-38.0" />
+      <point x="1496.0639333475601" y="602.0" />
+      <point x="1214.630681818182" y="602.0" />
+      <point x="1214.630681818182" y="422.0" />
+      <point x="1137.319615165742" y="422.0" />
+      <point x="0.0" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.egg.StuffedEggFactory">
+      <point x="83.33333333333326" y="-93.0" />
+      <point x="953.5890151515152" y="1310.0" />
+      <point x="1741.1472666808936" y="1310.0" />
+      <point x="1741.1472666808936" y="790.0" />
+      <point x="1710.7306000142269" y="790.0" />
+      <point x="122.66666666666663" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowEggFactory" target="uc.seng301.asg3.egg.HollowChocolateEgg">
+      <point x="138.0" y="-27.0" />
+      <point x="1206.5271571347275" y="622.0" />
+      <point x="1370.630681818182" y="622.0" />
+      <point x="0.0" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowEggFactory" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="-46.0" y="-27.0" />
+      <point x="1022.5271571347276" y="622.0" />
+      <point x="971.2771571347276" y="622.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="40.454545454545496" y="-104.0" />
+      <point x="879.047216887182" y="760.0" />
+      <point x="828.480600014227" y="760.0" />
+      <point x="828.480600014227" y="622.0" />
+      <point x="848.610490468061" y="622.0" />
+      <point x="-122.66666666666663" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="-153.33333333333343" y="-38.0" />
+      <point x="1434.7306000142269" y="612.0" />
+      <point x="1093.9438238013945" y="612.0" />
+      <point x="122.66666666666674" y="27.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.ChocolateEggFactory" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="92.0" y="-27.0" />
+      <point x="1063.2771571347275" y="432.0" />
+      <point x="1084.4105242566511" y="432.0" />
+      <point x="-52.90909090909088" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Chocolatier" target="uc.seng301.asg3.order.PreparingOrder">
+      <point x="66.75" y="-27.0" />
+      <point x="259.5625" y="1048.0" />
+      <point x="671.7176714326365" y="1048.0" />
+      <point x="-166.875" y="104.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.App" target="uc.seng301.asg3.egg.ChocolateType">
+      <point x="111.11111111111109" y="-93.0" />
+      <point x="981.3667929292931" y="1320.0" />
+      <point x="1901.2973484848485" y="1320.0" />
+      <point x="1901.2973484848485" y="150.0" />
+      <point x="1201.2910744771666" y="150.0" />
+      <point x="96.36363636363637" y="60.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.packaging.PackagingType">
+      <point x="-80.90909090909088" y="-104.0" />
+      <point x="757.6835805235457" y="790.0" />
+      <point x="730.8958333333334" y="790.0" />
+      <point x="730.8958333333334" y="402.0" />
+      <point x="533.2816047801966" y="402.0" />
+      <point x="126.66666666666652" y="71.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.Counter" target="uc.seng301.asg3.order.PreparingOrder">
+      <point x="68.40000000000009" y="-49.0" />
+      <point x="411.19267143263676" y="1147.0" />
+      <point x="859.255681818182" y="1147.0" />
+      <point x="859.255681818182" y="1048.0" />
+      <point x="782.9676714326365" y="1048.0" />
+      <point x="-55.625" y="104.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6694087403598972" x="995.8443913935382" y="632.272790000681" />
+  <SelectedNodes>
+    <node>uc.seng301.asg3.packaging.Packaging</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

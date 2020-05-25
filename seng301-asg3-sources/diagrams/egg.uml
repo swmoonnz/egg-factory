@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uc.seng301.asg3.egg</OriginalElement>
+  <nodes>
+    <node x="352.85416666666663" y="352.0">uc.seng301.asg3.egg.StuffedEggFactory</node>
+    <node x="454.5" y="248.0">uc.seng301.asg3.egg.StuffedChocolateEgg</node>
+    <node x="10.5" y="248.0">uc.seng301.asg3.egg.HollowChocolateEgg</node>
+    <node x="228.49999999999997" y="247.0">uc.seng301.asg3.egg.ChocolateEggFactory</node>
+    <node x="190.49999999999997" y="0.0">uc.seng301.asg3.egg.ChocolateType</node>
+    <node x="47.10416666666663" y="352.0">uc.seng301.asg3.egg.HollowEggFactory</node>
+    <node x="123.75074404761895" y="112.0">uc.seng301.asg3.egg.ChocolateEgg</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uc.seng301.asg3.egg.StuffedChocolateEgg" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="-1.4210854715202004E-14" y="-27.0" />
+      <point x="554.5" y="208.0" />
+      <point x="303.7507440476189" y="208.0" />
+      <point x="84.0" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowChocolateEgg" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="72.0" y="-27.0" />
+      <point x="178.5" y="228.0" />
+      <point x="183.75074404761895" y="228.0" />
+      <point x="-36.0" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="-23.0" y="-26.0" />
+      <point x="421.85416666666663" y="332.0" />
+      <point x="384.5" y="332.0" />
+      <point x="50.0" y="26.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowEggFactory" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="66.0" y="-26.0" />
+      <point x="201.10416666666663" y="332.0" />
+      <point x="284.5" y="332.0" />
+      <point x="-50.0" y="26.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="332.5" y="202.0" />
+  <SelectedNodes>
+    <node>uc.seng301.asg3.egg.ChocolateEggFactory</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>uc.seng301.asg3.egg</OriginalElement>
+  <nodes>
+    <node x="330.0" y="569.0">uc.seng301.asg3.Context</node>
+    <node x="205.0" y="327.0">uc.seng301.asg3.egg.StuffedEggFactory</node>
+    <node x="181.0" y="569.0">uc.seng301.asg3.order.Counter</node>
+    <node x="0.0" y="569.0">uc.seng301.asg3.order.Chocolatier</node>
+    <node x="0.0" y="126.0">uc.seng301.asg3.egg.StuffedChocolateEgg</node>
+    <node x="479.0" y="569.0">uc.seng301.asg3.App</node>
+    <node x="36.0" y="225.0">uc.seng301.asg3.order.Order</node>
+    <node x="409.0" y="327.0">uc.seng301.asg3.egg.HollowEggFactory</node>
+    <node x="0.0" y="448.0">uc.seng301.asg3.ingredient.Filling</node>
+    <node x="0.0" y="327.0">uc.seng301.asg3.order.PreparingOrder</node>
+    <node x="228.0" y="448.0">uc.seng301.asg3.ingredient.Ingredient</node>
+    <node x="220.0" y="126.0">uc.seng301.asg3.egg.HollowChocolateEgg</node>
+    <node x="297.0" y="225.0">uc.seng301.asg3.egg.ChocolateEggFactory</node>
+    <node x="401.0" y="448.0">uc.seng301.asg3.egg.ChocolateType</node>
+    <node x="112.0" y="0.0">uc.seng301.asg3.egg.ChocolateEgg</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="uc.seng301.asg3.egg.HollowChocolateEgg" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="0.0" y="-27.0" />
+      <point x="316.0" y="101.0" />
+      <point x="256.0" y="101.0" />
+      <point x="48.0" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.HollowEggFactory" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="0.0" y="-26.0" />
+      <point x="497.0" y="302.0" />
+      <point x="447.0" y="302.0" />
+      <point x="50.0" y="26.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedEggFactory" target="uc.seng301.asg3.egg.ChocolateEggFactory">
+      <point x="0.0" y="-26.0" />
+      <point x="297.0" y="302.0" />
+      <point x="347.0" y="302.0" />
+      <point x="-50.0" y="26.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.egg.StuffedChocolateEgg" target="uc.seng301.asg3.egg.ChocolateEgg">
+      <point x="0.0" y="-27.0" />
+      <point x="100.0" y="101.0" />
+      <point x="160.0" y="101.0" />
+      <point x="-48.0" y="38.0" />
+    </edge>
+    <edge source="uc.seng301.asg3.order.PreparingOrder" target="uc.seng301.asg3.order.Order">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="242.5" y="293.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
