@@ -21,6 +21,8 @@ package uc.seng301.asg3.egg;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uc.seng301.asg3.ingredient.Filling;
@@ -33,12 +35,13 @@ import uc.seng301.asg3.ingredient.Filling;
 public class StuffedEggFactory implements ChocolateEggFactory {
 
   private final List<Filling> fillings;
-  private final Random nextFillingPicker;
+//  private final Random nextFillingPicker;
   private final Logger logger = LogManager.getLogger(StuffedEggFactory.class.getName());
-
+  protected Integer fillingIndex;
   public StuffedEggFactory(List<Filling> fillings) {
     this.fillings = fillings;
-    nextFillingPicker = new Random();
+    this.fillingIndex = ThreadLocalRandom.current().nextInt(fillings.size());
+//    nextFillingPicker = new Random();
   }
 
   /**
@@ -67,10 +70,55 @@ public class StuffedEggFactory implements ChocolateEggFactory {
    * @return a randomly chosen filling
    */
   private Filling getSomeFilling(boolean containsAlcohol) {
-    Filling filling = fillings.get(nextFillingPicker.nextInt(fillings.size()));
+//    fillingIndex = ThreadLocalRandom.current().nextInt(getNumberOfFillings(containsAlcohol));
+//    if (!containsAlcohol) {
+//      for (Filling filling : fillings) {
+//        if (!filling.containsAlcohol()) {
+//          nonAlcoholicFillings.add(filling);
+//        }
+//      }
+//      filling = nonAlcoholicFillings.get(fillingIndex);
+////      fillingIndex ++;
+//    }
+//    else {
+//      filling = fillings.get(fillingIndex);
+//    }
+//
+//    return filling;
+//  }
+//    fillingIndex = ThreadLocalRandom.current().nextInt(2)
+  Filling filling = fillings.get(nextFillingPicker.nextInt(fillings.size()));
     while (filling.containsAlcohol() != containsAlcohol) {
-      filling = fillings.get(nextFillingPicker.nextInt(fillings.size()));
-    }
+    filling = fillings.get(nextFillingPicker.nextInt(fillings.size()));
+  }
     return filling;
+}
+
+  private Filling nextFilling(boolean containsAlcohol) {
+    Filling result;
+    if (!containsAlcohol) {
+      
+    }
+    return result;
+  }
+
+  /**
+   * Get number of fillings that contain alcohol or no alcohol. Also adds to the list of fillings that do not contain
+   * alcohol
+   * @param containsAlcohol
+   * @return the number of fillings by checking if it contains alcohol or not.
+   */
+  public Integer getNumberOfFillings(boolean containsAlcohol) {
+    if (!containsAlcohol){
+//      for (Filling filling : fillings) {
+//        if (!filling.containsAlcohol()) {
+//          nonAlcoholicFillings.add(filling);
+//        }
+//      }
+      return fillings.size() - 2;
+    }
+    else {
+      return fillings.size();
+    }
   }
 }
