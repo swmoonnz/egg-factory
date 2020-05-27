@@ -26,6 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uc.seng301.asg3.ingredient.Filling;
+import uc.seng301.asg3.order.PreparingOrder;
 
 /**
  * A StuffedChocolateFactory allows to produce stuffed eggs.
@@ -38,10 +39,10 @@ public class StuffedEggFactory implements ChocolateEggFactory {
 //  private final Random nextFillingPicker;
   private final Logger logger = LogManager.getLogger(StuffedEggFactory.class.getName());
   protected Integer fillingIndex;
+  protected Integer hollowsUsed;
   public StuffedEggFactory(List<Filling> fillings) {
     this.fillings = fillings;
-    this.fillingIndex = ThreadLocalRandom.current().nextInt(fillings.size());
-//    nextFillingPicker = new Random();
+    fillingIndex = ThreadLocalRandom.current().nextInt(fillings.size());
   }
 
   /**
@@ -57,7 +58,7 @@ public class StuffedEggFactory implements ChocolateEggFactory {
   public ChocolateEgg createChocolateEgg(ChocolateType type, boolean containsAlcohol) {
     logger.debug("create a {} stuffed egg with{} alcohol",
         type.name(), containsAlcohol ? "" : "out");
-    return new StuffedChocolateEgg(type, getSomeFilling(containsAlcohol));
+    return new StuffedChocolateEgg(type, nextFilling(containsAlcohol));
   }
 
   /**
@@ -69,37 +70,29 @@ public class StuffedEggFactory implements ChocolateEggFactory {
    * @param containsAlcohol true if the filling to return may contain alcohol, false if unspecified
    * @return a randomly chosen filling
    */
-  private Filling getSomeFilling(boolean containsAlcohol) {
-//    fillingIndex = ThreadLocalRandom.current().nextInt(getNumberOfFillings(containsAlcohol));
-//    if (!containsAlcohol) {
-//      for (Filling filling : fillings) {
-//        if (!filling.containsAlcohol()) {
-//          nonAlcoholicFillings.add(filling);
-//        }
-//      }
-//      filling = nonAlcoholicFillings.get(fillingIndex);
-////      fillingIndex ++;
-//    }
-//    else {
-//      filling = fillings.get(fillingIndex);
-//    }
-//
-//    return filling;
-//  }
-//    fillingIndex = ThreadLocalRandom.current().nextInt(2)
-  Filling filling = fillings.get(nextFillingPicker.nextInt(fillings.size()));
-    while (filling.containsAlcohol() != containsAlcohol) {
-    filling = fillings.get(nextFillingPicker.nextInt(fillings.size()));
-  }
-    return filling;
-}
-
   private Filling nextFilling(boolean containsAlcohol) {
-    Filling result;
-    if (!containsAlcohol) {
-      
+    if (containsAlcohol) {
+      if (fillingIndex < fillings.size()) {
+        return fillings.get(fillingIndex++);
+      } else {
+        fillingIndex = 0;
+        return fillings.get(fillingIndex++);
+      }
+    } else {
+        if (fillingIndex < fillings.size()) {
+          while (fillings.get(fillingIndex).containsAlcohol()) {
+            fillingIndex += 1;
+          }
+          return fillings.get(fillingIndex++);
+        }
+        else {
+          fillingIndex = 0;
+          while (fillings.get(fillingIndex).containsAlcohol()) {
+            fillingIndex += 1;
+          }
+          return fillings.get(fillingIndex++);
+        }
     }
-    return result;
   }
 
   /**
@@ -110,15 +103,11 @@ public class StuffedEggFactory implements ChocolateEggFactory {
    */
   public Integer getNumberOfFillings(boolean containsAlcohol) {
     if (!containsAlcohol){
-//      for (Filling filling : fillings) {
-//        if (!filling.containsAlcohol()) {
-//          nonAlcoholicFillings.add(filling);
-//        }
-//      }
       return fillings.size() - 2;
     }
     else {
       return fillings.size();
     }
   }
+
 }

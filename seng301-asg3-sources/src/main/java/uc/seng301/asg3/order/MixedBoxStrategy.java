@@ -24,7 +24,7 @@ public class MixedBoxStrategy implements PrepareStrategy {
 
     public MixedBoxStrategy(PreparingOrder po) {
         preparingOrder = po;
-        numberOfFillings = preparingOrder.getStuffedEggFactory().getNumberOfFillings(preparingOrder.containsAlcohol) + 1; // for Hollow Egg
+        numberOfFillings = preparingOrder.getStuffedEggFactory().getNumberOfFillings(preparingOrder.containsAlcohol) + 1; // add 1 for Hollow Egg
         if (preparingOrder.quantity > 9) {
             numberOfChocolateTypes = 4;
         } else {
@@ -51,7 +51,7 @@ public class MixedBoxStrategy implements PrepareStrategy {
             // long running tasks, as the produceEgg method. We also pass the executor where we created
             // a pool of threads with a given size of 3
             CompletableFuture.supplyAsync(() ->
-                    produceEgg(nextFactory(preparingOrder.stuffed), nextChocolateType(), preparingOrder.containsAlcohol), preparingOrder.getExecutor())
+                    produceEgg(getNextFactory(preparingOrder.stuffed), getNextChocolateType(), preparingOrder.containsAlcohol), preparingOrder.getExecutor())
                     // and we can be called-back when the process ran inside a CompletableFuture finishes and
                     // return some result when want to process, like here the produced eggs
                     .thenAcceptAsync(egg -> {
@@ -92,47 +92,57 @@ public class MixedBoxStrategy implements PrepareStrategy {
     }
 
     /**
-     * Get the next egg factory
+     * Gets the next factory
      *
      * @return an egg factory
      */
-    private ChocolateEggFactory nextFactory(boolean stuffed) {
-        return factoryIndex++ % numberOfFillings != 0 && stuffed ?
-                preparingOrder.getStuffedEggFactory() : preparingOrder.getHollowEggFactory();
+    private ChocolateEggFactory getNextFactory(boolean stuffed) {
+        if (factoryIndex % numberOfFillings != 0 && stuffed) {
+            factoryIndex ++;
+            return preparingOrder.getStuffedEggFactory();
+        }
+        else {
+            return preparingOrder.getHollowEggFactory();
+        }
     }
 
     /**
-     * Get the next chocolate type, checks if crunchy is allowed and if not it will pick again.
-     *
+     * Method to get the next chocolate type by checking if a crunchy is allowed or not
      * @return a chocolate type
      */
-    private ChocolateType nextChocolateType() {
+    private ChocolateType getNextChocolateType() {
         ChocolateType result;
-        if (isCrunchiesLeft()) {
-            result = ChocolateType.values()[chocolateTypeIndex];
+        result = ChocolateType.values()[chocolateTypeIndex];
+        if (!areCrunchiesLeft()) {
+            if (chocolateTypeIndex + 1 < numberOfChocolateTypes) {
+                chocolateTypeIndex++;
+            } else {
+                chocolateTypeIndex = 0;
+            }
+        } else {
             if (result == ChocolateType.CRUNCHY) {
                 crunchiesUsed++;
             }
-            if (!isCrunchiesLeft()) {
-                chocolateTypeIndex = 0;
+            if (!areCrunchiesLeft()) {
                 numberOfChocolateTypes = 3;
+                chocolateTypeIndex = 0;
             } else {
-                chocolateTypeIndex = (chocolateTypeIndex + 1) < numberOfChocolateTypes ? (chocolateTypeIndex + 1) : 0;
+                if (chocolateTypeIndex + 1 < numberOfChocolateTypes) {
+                    chocolateTypeIndex++;
+                } else {
+                    chocolateTypeIndex = 0;
+                }
             }
-        } else {
-            result = ChocolateType.values()[chocolateTypeIndex];
-            chocolateTypeIndex = (chocolateTypeIndex + 1) < numberOfChocolateTypes ? (chocolateTypeIndex + 1) : 0;
         }
         return result;
     }
 
     /**
-     * Checks if an egg of type crunchy can still be added
-     *
-     * @return true if type crunchy is still an option for chocolate type, else false
+     * Checks that adding a crunchy egg will not make it higher than 10% of the requirement
+     * @return true if crunchy type can be added, else returns false
      */
-    private boolean isCrunchiesLeft() {
-        return crunchiesUsed < (preparingOrder.quantity / 10);
+    private boolean areCrunchiesLeft() {
+        return crunchiesUsed < (preparingOrder.quantity * 0.1);
     }
 }
 

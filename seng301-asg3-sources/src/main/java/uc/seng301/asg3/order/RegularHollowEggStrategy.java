@@ -1,17 +1,155 @@
-//package uc.seng301.asg3.order;
-//
-//import uc.seng301.asg3.egg.ChocolateType;
-//import uc.seng301.asg3.egg.HollowEggFactory;
-//import uc.seng301.asg3.egg.StuffedEggFactory;
-//import uc.seng301.asg3.packaging.PackagingType;
-//
-//public class RegularHollowEggStrategy extends PrepareStrategy {
-//    public RegularHollowEggStrategy(PackagingType packagingType, HollowEggFactory hollowEggFactory, StuffedEggFactory stuffedEggFactory, boolean stuffed, ChocolateType chocolateType, boolean containsAlcohol) {
-//        super();
-//    }
-//
-//    @Override
-//    public void prepareBox() {
-//        super.prepareBox();
-//    }
-//}
+
+package uc.seng301.asg3.order;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import uc.seng301.asg3.egg.ChocolateEgg;
+import uc.seng301.asg3.egg.ChocolateEggFactory;
+import uc.seng301.asg3.egg.ChocolateType;
+import uc.seng301.asg3.packaging.PackagingType;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class RegularHollowEggStrategy implements PrepareStrategy {
+
+    protected PreparingOrder preparingOrder;
+    protected Integer hollowsUsed;
+    protected Integer chocolateTypeIndex;
+    protected Integer factoryIndex;
+    protected Integer numberOfChocolateTypes;
+    protected Integer numberOfFillings;
+
+    protected final Logger logger = LogManager.getLogger(PreparingOrder.class.getName());
+
+    public RegularHollowEggStrategy(PreparingOrder po) {
+        preparingOrder = po;
+        hollowsUsed = 0;
+        numberOfFillings = preparingOrder.getStuffedEggFactory().getNumberOfFillings(preparingOrder.containsAlcohol) + 1; // for Hollow Egg
+        numberOfChocolateTypes = 3;
+        chocolateTypeIndex = ThreadLocalRandom.current().nextInt(numberOfChocolateTypes);
+        factoryIndex = ThreadLocalRandom.current().nextInt(numberOfFillings);
+    }
+
+    /**
+     * Produce an order by creating all expected eggs using the attributes defined in
+     * {@link Order#createOrder} and corresponding factories.<br>
+     * Eggs are asynchronously created in separate threads (except the containing hollow egg if
+     * the type of packaging is an hollow egg) and placed into the packaging or the containing
+     * hollow egg when produced.
+     *
+     * @see PackagingType
+     */
+    @Override
+    public void prepare() {
+        preparingOrder.packaging.addChocolateEgg(produceEgg(preparingOrder.getHollowEggFactory(), getChocolateType(), false));
+        numberOfChocolateTypes = 4;
+        for (int i = 0; i < preparingOrder.quantity; i++) {
+            // CompletableFutures are sorts of threads that can be easily created on the fly to process
+            // long running tasks, as the produceEgg method. We also pass the executor where we created
+            // a pool of threads with a given size of 3
+            CompletableFuture.supplyAsync(() ->
+                    produceEgg(nextFactory(preparingOrder.stuffed), preparingOrder.chocolateType, preparingOrder.containsAlcohol), preparingOrder.getExecutor())
+                    // and we can be called-back when the process ran inside a CompletableFuture finishes and
+                    // return some result when want to process, like here the produced eggs
+                    .thenAcceptAsync(egg -> {
+                        logger.debug("add egg to package");
+                        boolean eggAdded = preparingOrder.packaging.getEggs().get(0).addChocolateEgg(egg);
+                        logger.info("{} egg has{}been produced.",
+                                egg.getChocolateType(), eggAdded ? " " : " not ");
+                    }, preparingOrder.getExecutor())
+                    .exceptionally(e -> {
+                        System.out.println("Something happens here: "+e);
+                        // we need to check here if no exception has been raised from the execution the
+                        // the future. Exception raised inside the body of supplyAsync and thenAcceptAsync
+                        // won't show up anywhere unless we catch them with this "exceptionally" method
+                        logger.error("Something bad happen", e);
+                        return null;
+                    });
+        }
+    }
+    /**
+     * Helper method to produce an egg.
+     *
+     * @param factory the factory needed to create an egg
+     * @param type the chocolate type
+     * @param containsAlcohol if this chocolate may contain alcohol or not
+     * @return the produced egg by given factory
+     */
+    private ChocolateEgg produceEgg(ChocolateEggFactory factory, ChocolateType type,
+                                    boolean containsAlcohol) {
+        logger.debug("produce egg with factory {} of type {} with{} alcohol",
+                factory.getClass().getSimpleName(), type.name(), containsAlcohol ? "" : "out");
+        try {
+            // add a sleep to simulate some preparation time and therefore longer tasks
+            Thread.sleep(ThreadLocalRandom.current().nextInt(2000));
+        } catch (InterruptedException e) {
+            logger.error("Interrupted while producing an egg", e);
+        }
+        return factory.createChocolateEgg(type, containsAlcohol);
+    }
+
+    /**
+     * Get the next egg factory
+     *
+     * @return an egg factory
+     */
+    private ChocolateEggFactory nextFactory(boolean stuffed) {
+        if (factoryIndex % numberOfFillings != 0 && stuffed) {
+            factoryIndex ++;
+            return preparingOrder.getStuffedEggFactory();
+        }
+        else if (hollowsLeft()) {
+           factoryIndex ++;
+            hollowsUsed ++;
+            return preparingOrder.getHollowEggFactory();
+        }
+        else{
+            factoryIndex ++;
+            return preparingOrder.getStuffedEggFactory();
+        }
+
+    }
+
+    /**
+     * Get the next chocolate type, checks if crunchy is allowed and if not it will pick again.
+     *
+     * @return a chocolate type
+     */
+    private ChocolateType nextChocolateType() {
+        ChocolateType result;
+        result = ChocolateType.values()[chocolateTypeIndex];
+        chocolateTypeIndex = (chocolateTypeIndex + 1) < numberOfChocolateTypes ? (chocolateTypeIndex + 1) : 0;
+        return result;
+    }
+
+    /**
+     * Checks if an egg of type crunchy can still be added
+     *
+     * @return true if type crunchy is still an option for chocolate type, else false
+     */
+
+    private boolean hollowsLeft() {
+
+        return hollowsUsed < Math.round(preparingOrder.quantity * 0.25);
+    }
+
+    //  /**
+//   * Get a chocolate type based on client selection. If crunchy is selected it will change to a white chocolate type
+//   *
+//   * @return a random chocolate type, or this order chocolate type if packaging type requires it
+//   * @see PackagingType
+//   */
+
+    private ChocolateType getChocolateType() {
+        ChocolateType result;
+        if (preparingOrder.chocolateType.equals(ChocolateType.CRUNCHY)) {
+            result = ChocolateType.WHITE;
+        }
+        else {
+           result = preparingOrder.chocolateType;
+        }
+        return result;
+    }
+}
+

@@ -85,15 +85,15 @@ public class PreparingOrder extends Order {
 
     switch (packagingType.id()){
 
-//      case(1): // Regular box
-//                prepareStrategy(new RegularBoxStrategy(this));
-//                break;
+      case(1): // Regular box
+                prepareStrategy(new RegularBoxStrategy(this));
+                break;
       case(2): prepareStrategy(new MixedBoxStrategy(this));
                 break;
-//      case(3): prepareStrategy(new RegularHollowEggStrategy(this));
-//                break;
-//      case(4): prepareStrategy(new MixedHollowEggStrategy(this));
-//                break;
+      case(3): prepareStrategy(new RegularHollowEggStrategy(this));
+                break;
+      case(4): prepareStrategy(new MixedHollowEggStrategy(this));
+                break;
 
     }
 
