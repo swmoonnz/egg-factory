@@ -49,7 +49,7 @@ public class MixedHollowEggStrategy implements PrepareStrategy {
             // long running tasks, as the produceEgg method. We also pass the executor where we created
             // a pool of threads with a given size of 3
             CompletableFuture.supplyAsync(() ->
-                    produceEgg(nextFactory(preparingOrder.stuffed), nextChocolateType(), preparingOrder.containsAlcohol), preparingOrder.getExecutor())
+                    produceEgg(getNextFactory(preparingOrder.stuffed), getNextChocolateType(), preparingOrder.containsAlcohol), preparingOrder.getExecutor())
                     // and we can be called-back when the process ran inside a CompletableFuture finishes and
                     // return some result when want to process, like here the produced eggs
                     .thenAcceptAsync(egg -> {
@@ -68,6 +68,7 @@ public class MixedHollowEggStrategy implements PrepareStrategy {
                     });
         }
     }
+
     /**
      * Helper method to produce an egg.
      *
@@ -90,24 +91,30 @@ public class MixedHollowEggStrategy implements PrepareStrategy {
     }
 
     /**
-     * Get the next egg factory
+     * Gets the next factory
      *
      * @return an egg factory
      */
-    private ChocolateEggFactory nextFactory(boolean stuffed) {
-        return factoryIndex++ % numberOfFillings != 0 && stuffed ?
-                preparingOrder.getStuffedEggFactory() : preparingOrder.getHollowEggFactory();
+    private ChocolateEggFactory getNextFactory(boolean stuffed) {
+        if(factoryIndex % numberOfFillings != 0 && stuffed) {
+            factoryIndex ++;
+            return preparingOrder.getStuffedEggFactory();
+        }
+        else {
+            factoryIndex ++;
+            return preparingOrder.getHollowEggFactory();
+        }
     }
 
     /**
-     * Get the next chocolate type, checks if crunchy is allowed and if not it will pick again.
+     * Method to get the next chocolate type by checking if a crunchy is allowed or not
      *
      * @return a chocolate type
      */
-    private ChocolateType nextChocolateType() {
+    private ChocolateType getNextChocolateType() {
         ChocolateType result;
         result = ChocolateType.values()[chocolateTypeIndex];
-        if (!isCrunchiesLeft()) {
+        if (!areCrunchiesLeft()) {
             if (chocolateTypeIndex + 1 < numberOfChocolateTypes) {
                 chocolateTypeIndex++;
             } else {
@@ -117,7 +124,7 @@ public class MixedHollowEggStrategy implements PrepareStrategy {
             if (result == ChocolateType.CRUNCHY) {
                 crunchiesUsed++;
             }
-            if (!isCrunchiesLeft()) {
+            if (!areCrunchiesLeft()) {
                 numberOfChocolateTypes = 3;
                 chocolateTypeIndex = 0;
             } else {
@@ -132,25 +139,25 @@ public class MixedHollowEggStrategy implements PrepareStrategy {
     }
 
     /**
-     * Checks if an egg of type crunchy can still be added
+     * Checks that adding a crunchy egg will not make it higher than 10% of the requirement
      *
-     * @return true if type crunchy is still an option for chocolate type, else false
+     * @return true if crunchy type can be added, else returns false
      */
-    private boolean isCrunchiesLeft() {
-        return crunchiesUsed < (preparingOrder.quantity / 10);
+    private boolean areCrunchiesLeft() {
+        return crunchiesUsed < (preparingOrder.quantity * 0.1);
     }
 
-//  /**
-//   * Get a random chocolate type if packaging allows it
-//   *
-//   * @return a random chocolate type, or this order chocolate type if packaging type requires it
-//   * @see PackagingType
-//   */
+      /**
+       * Get a random chocolate type if packaging allows it
+       *
+       * @return a random chocolate type, or this order chocolate type if packaging type requires it
+       * @see PackagingType
+       */
       private ChocolateType randomChocolateType() {
-    return preparingOrder.packagingType.equals(PackagingType.MIXED_BOX)
-        || preparingOrder.packagingType.equals(PackagingType.MIXED_HOLLOW_EGG) ?
-        ChocolateType.values()[ThreadLocalRandom.current().nextInt(numberOfChocolateTypes)]
-        : preparingOrder.chocolateType;
-  }
+        return preparingOrder.packagingType.equals(PackagingType.MIXED_BOX)
+            || preparingOrder.packagingType.equals(PackagingType.MIXED_HOLLOW_EGG) ?
+            ChocolateType.values()[ThreadLocalRandom.current().nextInt(numberOfChocolateTypes)]
+            : preparingOrder.chocolateType;
+    }
 }
 

@@ -107,6 +107,7 @@ public class PreparingOrder extends Order {
     return hollowEggFactory;
   }
 
+
   public StuffedEggFactory getStuffedEggFactory() {
     return stuffedEggFactory;
   }

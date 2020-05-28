@@ -92,16 +92,19 @@ programming to an interface and not an implementation.
 |-----------------------|----------------------------------|
 | Context               | PreparingOrder                   |
 | Strategy              | PrepareStrategy                  |
-| ConcreteStrategyA     | RegularBoxPrepare                |
-| ConcreteStrategyB     | MixedBoxPrepare                  |
-| ConcreteStrategyC     | RegularHollowEggPrepare          |
-| ConcreteStrategyD     | MixedHollowEggPrepare            |
+| ConcreteStrategyA     | RegularBoxStrategy               |
+| ConcreteStrategyB     | MixedBoxStrategy                 |
+| ConcreteStrategyC     | RegularHollowEggStrategy         |
+| ConcreteStrategyD     | MixedHollowEggStrategy           |
 | Algorithm             | prepare()                        |
 
 ### Task 3.2 - fill in the packages with eggs
 
-- What pattern fulfils the need for the feature?
-- What is its goal and why is it needed here?
+- What pattern fulfils the need for the feature? Iterator Pattern
+- What is its goal and why is it needed here? To use an iterator to traverse our list of eggs. It is needed here as we 
+want to access the eggs in the packaging and traverse through the eggs of the packaging without exposing its data
+structure. It is a way to provide access to the elements (the eggs) of an aggregate object (the package) sequentially
+without exposing its underlying representation.
 - Name of UML Class diagram attached: 
 - Mapping to GoF pattern elements:
 

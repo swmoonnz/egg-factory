@@ -97,17 +97,19 @@ public class MixedBoxStrategy implements PrepareStrategy {
      * @return an egg factory
      */
     private ChocolateEggFactory getNextFactory(boolean stuffed) {
-        if (factoryIndex % numberOfFillings != 0 && stuffed) {
+        if(factoryIndex % numberOfFillings != 0 && stuffed) {
             factoryIndex ++;
             return preparingOrder.getStuffedEggFactory();
         }
         else {
+            factoryIndex ++;
             return preparingOrder.getHollowEggFactory();
         }
     }
 
     /**
      * Method to get the next chocolate type by checking if a crunchy is allowed or not
+     *
      * @return a chocolate type
      */
     private ChocolateType getNextChocolateType() {
@@ -139,6 +141,7 @@ public class MixedBoxStrategy implements PrepareStrategy {
 
     /**
      * Checks that adding a crunchy egg will not make it higher than 10% of the requirement
+     *
      * @return true if crunchy type can be added, else returns false
      */
     private boolean areCrunchiesLeft() {

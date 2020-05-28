@@ -20,7 +20,9 @@
 package uc.seng301.asg3.packaging;
 
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import uc.seng301.asg3.egg.ChocolateEgg;
 
@@ -82,7 +84,24 @@ public class Packaging {
       throw new UnsupportedOperationException("Cannot add more than one egg when packaging is a"
           + " hollow egg.");
     }
+    Integer addIndex = traverseEggs(egg);
     return eggs.add(egg);
+  }
+
+  private Integer traverseEggs(ChocolateEgg egg) {
+    Integer index = ThreadLocalRandom.current().nextInt(eggs.size());
+    ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
+    for (int i = 0; i < eggItr.size(); i++)
+    while(eggItr.hasNext())
+    {
+      if (eggItr.hasPrevious() && eggItr.hasNext()) {
+
+      }
+      index ++;
+
+    }
+
+    return 1;
   }
 
   /**

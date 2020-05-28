@@ -61,6 +61,7 @@ public class RegularBoxStrategy implements PrepareStrategy {
                     });
         }
     }
+
     /**
      * Helper method to produce an egg.
      *

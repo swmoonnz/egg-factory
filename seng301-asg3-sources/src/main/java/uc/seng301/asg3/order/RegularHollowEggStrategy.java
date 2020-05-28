@@ -49,7 +49,7 @@ public class RegularHollowEggStrategy implements PrepareStrategy {
             // long running tasks, as the produceEgg method. We also pass the executor where we created
             // a pool of threads with a given size of 3
             CompletableFuture.supplyAsync(() ->
-                    produceEgg(nextFactory(preparingOrder.stuffed), preparingOrder.chocolateType, preparingOrder.containsAlcohol), preparingOrder.getExecutor())
+                    produceEgg(getNextFactory(preparingOrder.stuffed), preparingOrder.chocolateType, preparingOrder.containsAlcohol), preparingOrder.getExecutor())
                     // and we can be called-back when the process ran inside a CompletableFuture finishes and
                     // return some result when want to process, like here the produced eggs
                     .thenAcceptAsync(egg -> {
@@ -94,7 +94,7 @@ public class RegularHollowEggStrategy implements PrepareStrategy {
      *
      * @return an egg factory
      */
-    private ChocolateEggFactory nextFactory(boolean stuffed) {
+    private ChocolateEggFactory getNextFactory(boolean stuffed) {
         if (factoryIndex % numberOfFillings != 0 && stuffed) {
             factoryIndex ++;
             return preparingOrder.getStuffedEggFactory();
@@ -108,40 +108,25 @@ public class RegularHollowEggStrategy implements PrepareStrategy {
             factoryIndex ++;
             return preparingOrder.getStuffedEggFactory();
         }
-
     }
 
-    /**
-     * Get the next chocolate type, checks if crunchy is allowed and if not it will pick again.
-     *
-     * @return a chocolate type
-     */
-    private ChocolateType nextChocolateType() {
-        ChocolateType result;
-        result = ChocolateType.values()[chocolateTypeIndex];
-        chocolateTypeIndex = (chocolateTypeIndex + 1) < numberOfChocolateTypes ? (chocolateTypeIndex + 1) : 0;
-        return result;
-    }
 
     /**
-     * Checks if an egg of type crunchy can still be added
+     * Checks if a hollow egg can be added
      *
-     * @return true if type crunchy is still an option for chocolate type, else false
+     * @return true if hollow egg can be added or else false
      */
-
     private boolean hollowsLeft() {
-
         return hollowsUsed < Math.round(preparingOrder.quantity * 0.25);
     }
 
-    //  /**
-//   * Get a chocolate type based on client selection. If crunchy is selected it will change to a white chocolate type
-//   *
-//   * @return a random chocolate type, or this order chocolate type if packaging type requires it
-//   * @see PackagingType
-//   */
-
-    private ChocolateType getChocolateType() {
+      /**
+   * Get a chocolate type based on client selection. If crunchy is selected it will change to a white chocolate type
+   *
+   * @return a random chocolate type, or this order chocolate type if packaging type requires it
+   * @see PackagingType
+   */
+      private ChocolateType getChocolateType() {
         ChocolateType result;
         if (preparingOrder.chocolateType.equals(ChocolateType.CRUNCHY)) {
             result = ChocolateType.WHITE;
