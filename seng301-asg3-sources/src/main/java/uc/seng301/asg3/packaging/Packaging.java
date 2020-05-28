@@ -91,7 +91,6 @@ public class Packaging {
   private Integer traverseEggs(ChocolateEgg egg) {
     Integer index = ThreadLocalRandom.current().nextInt(eggs.size());
     ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
-    for (int i = 0; i < eggItr.size(); i++)
     while(eggItr.hasNext())
     {
       if (eggItr.hasPrevious() && eggItr.hasNext()) {
