@@ -77,4 +77,16 @@ public abstract class ChocolateEgg {
   public boolean removeChocolateEgg(ChocolateEgg egg){
     throw new UnsupportedOperationException("No egg can be removed from this chocolate egg.");
   }
+
+  public boolean compareChocolate(ChocolateEgg egg) {
+    System.out.println("----------------------");
+    System.out.println(this);
+    System.out.println(egg);
+    System.out.println(this.equals(egg));
+    System.out.println(this.getChocolateType() == egg.getChocolateType());
+    System.out.println("result");
+    System.out.println((this.getChocolateType() == egg.getChocolateType()));
+    System.out.println("----------------------");
+    return ((this.getChocolateType() == egg.getChocolateType()));
+  }
 }

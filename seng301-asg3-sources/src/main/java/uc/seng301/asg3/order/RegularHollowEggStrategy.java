@@ -95,18 +95,24 @@ public class RegularHollowEggStrategy implements PrepareStrategy {
      * @return an egg factory
      */
     private ChocolateEggFactory getNextFactory(boolean stuffed) {
-        if (factoryIndex % numberOfFillings != 0 && stuffed) {
-            factoryIndex ++;
-            return preparingOrder.getStuffedEggFactory();
+        if (stuffed) {
+            if (factoryIndex % numberOfFillings != 0 && stuffed) {
+                factoryIndex ++;
+                return preparingOrder.getStuffedEggFactory();
+            }
+            else if (hollowsLeft()) {
+                factoryIndex ++;
+                hollowsUsed ++;
+                return preparingOrder.getHollowEggFactory();
+            }
+            else{
+                factoryIndex ++;
+                return preparingOrder.getStuffedEggFactory();
+            }
         }
-        else if (hollowsLeft()) {
-           factoryIndex ++;
-            hollowsUsed ++;
+        else {
+            factoryIndex ++;
             return preparingOrder.getHollowEggFactory();
-        }
-        else{
-            factoryIndex ++;
-            return preparingOrder.getStuffedEggFactory();
         }
     }
 

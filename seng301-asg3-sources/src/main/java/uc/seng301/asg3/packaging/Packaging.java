@@ -84,24 +84,42 @@ public class Packaging {
       throw new UnsupportedOperationException("Cannot add more than one egg when packaging is a"
           + " hollow egg.");
     }
-    Integer addIndex = traverseEggs(egg);
+    ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
+    ChocolateEgg previous;
+    ChocolateEgg current;
+    Integer index = 1;
+    if (eggs.size() == 0) {
+      return eggs.add(egg);
+    }
+    else {
+      previous = eggItr.next();
+      if (!previous.compareChocolate(egg)) {
+        System.out.println("--------------1---------------");
+        eggs.add(0, egg);
+        return true;
+      }
+      else {
+        while (eggItr.hasNext()) {
+          System.out.println("second nest has next");
+          current = eggItr.next();
+          if (!(previous.compareChocolate(egg) && current.compareChocolate(egg))) {
+            System.out.println("--------------2---------------");
+            eggs.add(index, egg);
+            return true;
+          }
+          else{
+            index ++;
+            previous = current;
+          }
+        }
+      }
+    }
     return eggs.add(egg);
   }
 
-  private Integer traverseEggs(ChocolateEgg egg) {
-    Integer index = ThreadLocalRandom.current().nextInt(eggs.size());
-    ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
-    while(eggItr.hasNext())
-    {
-      if (eggItr.hasPrevious() && eggItr.hasNext()) {
-
-      }
-      index ++;
-
-    }
-
-    return 1;
-  }
+//  public boolean compareChocolateEggs(ChocolateEgg previous, ChocolateEgg egg, ChocolateEgg current) {
+//    return !(previous.equals(egg.getChocolateType()) && current.equals(egg.getChocolateType())) && !(previous.equals(egg) && current.equals(egg));
+//  }
 
   /**
    * Retrieve the list of eggs packed in this package. Will be only one if this packaging is

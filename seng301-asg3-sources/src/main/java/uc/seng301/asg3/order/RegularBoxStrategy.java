@@ -22,6 +22,7 @@ public class RegularBoxStrategy implements PrepareStrategy {
 
     public RegularBoxStrategy(PreparingOrder po) {
         preparingOrder = po;
+        numberOfFillings = preparingOrder.getStuffedEggFactory().getNumberOfFillings(preparingOrder.containsAlcohol) + 1; // for Hollow Egg
         factoryIndex = ThreadLocalRandom.current().nextInt(numberOfFillings);
         crunchiesUsed = 0;
     }
@@ -89,13 +90,13 @@ public class RegularBoxStrategy implements PrepareStrategy {
      * @return an egg factory
      */
     private ChocolateEggFactory getNextFactory(boolean stuffed) {
-        if (factoryIndex % numberOfFillings != 0 && stuffed) {
+        if(factoryIndex % numberOfFillings != 0 && stuffed) {
             factoryIndex ++;
             return preparingOrder.getStuffedEggFactory();
         }
         else {
+            factoryIndex ++;
             return preparingOrder.getHollowEggFactory();
         }
     }
 }
-
