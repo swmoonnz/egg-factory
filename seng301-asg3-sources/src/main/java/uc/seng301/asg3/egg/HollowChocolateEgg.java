@@ -21,6 +21,8 @@ package uc.seng301.asg3.egg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import static uc.seng301.asg3.utils.Util.sortEggs;
 
 /**
  * Hollow chocolate eggs are eggs without any filling but that can contain other eggs inside.
@@ -59,7 +61,39 @@ public class HollowChocolateEgg extends ChocolateEgg {
     if (null == egg) {
       throw new IllegalArgumentException("Given egg to add can't be null.");
     }
-    return content.add(egg);
+    ListIterator<ChocolateEgg> contentItr = content.listIterator();
+    ChocolateEgg previous;
+    ChocolateEgg next;
+    Integer index = 1;
+
+    return sortEggs(content, egg);
+
+/*    if (content.size() == 0) {
+      return content.add(egg);
+    }
+    else {
+      previous = contentItr.next();
+      System.out.println("HEEEEEEEEEEERE");
+      if (!previous.compareChocolate(egg)) {
+        content.add(0, egg);
+        return true;
+      }
+      else {
+        while (contentItr.hasNext()) {
+          next = contentItr.next();
+          System.out.println("Second -------------------");
+          if (!(previous.compareChocolate(egg)) && !(next.compareChocolate(egg))) { //broken
+            content.add(index, egg);
+            return true;
+          }
+          else{
+            index ++;
+            previous = next;
+          }
+        }
+      }
+    }
+    return content.add(egg);*/
   }
 
   /**

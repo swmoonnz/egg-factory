@@ -78,15 +78,55 @@ public abstract class ChocolateEgg {
     throw new UnsupportedOperationException("No egg can be removed from this chocolate egg.");
   }
 
+  /**
+   * This method is used to make a comparison between 2 eggs. It will check if they are stuffed or hollow
+   * and then check if they have the same chocolate type and filling
+   *
+   * @param egg chocolate egg to compare with
+   * @return boolean value if the eggs being compared are the same. Otherwise false
+   */
   public boolean compareChocolate(ChocolateEgg egg) {
-    System.out.println("----------------------");
+    System.out.println("--========START=========-");
+
+    char c = 'c';
+    char d = 'c';
+    System.out.println("CHAR COMPARINSON");
+    System.out.println(c == d);
+    System.out.println("CHAR COMPARINSON");
     System.out.println(this);
     System.out.println(egg);
+
+    System.out.println("COMPARING EGG OBJECTS");
     System.out.println(this.equals(egg));
-    System.out.println(this.getChocolateType() == egg.getChocolateType());
-    System.out.println("result");
-    System.out.println((this.getChocolateType() == egg.getChocolateType()));
-    System.out.println("----------------------");
-    return ((this.getChocolateType() == egg.getChocolateType()));
+    System.out.println("11111111111111");
+    System.out.println(this.toString().charAt(6));
+    System.out.println(egg.toString().charAt(6));
+    System.out.println(this.toString().charAt(6) == egg.toString().charAt(6));
+//    System.out.println(egg.getChocolateType().equals(this.getChocolateType()));
+    System.out.println("--======FINISH===========-");
+    if (this.toString().length() == 25 && egg.toString().length() == 25) {
+      if (this.getChocolateType().equals(egg.getChocolateType())) {
+        System.out.println("TRUE");
+        return true;
+      }
+      else {
+        System.out.println("FALSE");
+        return false;
+      }
+    }
+    else if (this.toString().length () != egg.toString().length()) {
+      System.out.println("FALSE");
+      return false;
+    }
+    else {
+      if (this.getChocolateType().equals(egg.getChocolateType()) && this.toString().charAt(6) == egg.toString().charAt(6)) {
+        System.out.println("TRUE");
+        return true;
+      }
+      else {
+        System.out.println("FALSE");
+        return false;
+      }
+    }
   }
 }

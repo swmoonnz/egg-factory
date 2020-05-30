@@ -25,6 +25,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import uc.seng301.asg3.egg.ChocolateEgg;
+import static uc.seng301.asg3.utils.Util.sortEggs;
 
 /**
  * A Packaging contains eggs produced by orders. The way eggs are placed in a packaging depends on
@@ -84,42 +85,39 @@ public class Packaging {
       throw new UnsupportedOperationException("Cannot add more than one egg when packaging is a"
           + " hollow egg.");
     }
-    ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
-    ChocolateEgg previous;
-    ChocolateEgg current;
-    Integer index = 1;
-    if (eggs.size() == 0) {
-      return eggs.add(egg);
-    }
-    else {
-      previous = eggItr.next();
-      if (!previous.compareChocolate(egg)) {
-        System.out.println("--------------1---------------");
-        eggs.add(0, egg);
-        return true;
-      }
-      else {
-        while (eggItr.hasNext()) {
-          System.out.println("second nest has next");
-          current = eggItr.next();
-          if (!(previous.compareChocolate(egg) && current.compareChocolate(egg))) {
-            System.out.println("--------------2---------------");
-            eggs.add(index, egg);
-            return true;
-          }
-          else{
-            index ++;
-            previous = current;
-          }
-        }
-      }
-    }
-    return eggs.add(egg);
+    return sortEggs(eggs, egg);
+//    ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
+//    ChocolateEgg previous;
+//    ChocolateEgg next;
+//    Integer index = 1;
+//
+//    if (eggs.size() == 0) {
+//      return eggs.add(egg);
+//    }
+//    else {
+//      previous = eggItr.next();
+//      System.out.println("HEEEEEEEEEEERE");
+//      if (!previous.compareChocolate(egg)) {
+//        eggs.add(0, egg);
+//        return true;
+//      }
+//      else {
+//        while (eggItr.hasNext()) {
+//          next = eggItr.next();
+//          System.out.println("Second -------------------");
+//          if (!(previous.compareChocolate(egg)) && !(next.compareChocolate(egg))) { //broken
+//            eggs.add(index, egg);
+//            return true;
+//          }
+//          else{
+//            index ++;
+//            previous = next;
+//          }
+//        }
+//      }
+//    }
+//    return eggs.add(egg);
   }
-
-//  public boolean compareChocolateEggs(ChocolateEgg previous, ChocolateEgg egg, ChocolateEgg current) {
-//    return !(previous.equals(egg.getChocolateType()) && current.equals(egg.getChocolateType())) && !(previous.equals(egg) && current.equals(egg));
-//  }
 
   /**
    * Retrieve the list of eggs packed in this package. Will be only one if this packaging is
