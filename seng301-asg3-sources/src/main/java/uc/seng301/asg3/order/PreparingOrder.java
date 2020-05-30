@@ -46,6 +46,7 @@ public class PreparingOrder extends Order {
 
   private final HollowEggFactory hollowEggFactory;
   private final StuffedEggFactory stuffedEggFactory;
+  private PrepareStrategy prepareStrategy;
 
   public ExecutorService getExecutor() {
     return executor;
@@ -69,6 +70,26 @@ public class PreparingOrder extends Order {
     this.stuffedEggFactory = stuffedEggFactory;
   }
 
+
+  public void selectStrategy() {
+
+    executor = Executors.newFixedThreadPool(3);
+
+    switch (packagingType.id()) {
+      case (1):
+        prepareStrategy = new RegularBoxStrategy(this);
+        break;
+      case (2):
+        prepareStrategy = new MixedBoxStrategy(this);
+        break;
+      case (3):
+        prepareStrategy = new RegularHollowEggStrategy(this);
+        break;
+      case (4):
+        prepareStrategy = new MixedHollowEggStrategy(this);
+        break;
+    }
+  }
   /**
    * Prepare an order by creating all expected eggs using the attributes defined in
    * {@link Order#createOrder} and corresponding factories.<br>
@@ -78,84 +99,71 @@ public class PreparingOrder extends Order {
    *
    * @see PackagingType
    */
+
+
   @Override
-  public void prepare() {
+  public void prepare(){
+    selectStrategy();
+    if (PackagingType.isHollowEggPackaging(packagingType)) {
+        packaging.addChocolateEgg(produceEgg(hollowEggFactory, randomChocolateType(), false));
+      }
 
-    executor = Executors.newFixedThreadPool(3);
+      for (int i = 0; i < quantity; i++) {
+        // CompletableFutures are sorts of threads that can be easily created on the fly to process
+        // long running tasks, as the produceEgg method. We also pass the executor where we created
+        // a pool of threads with a given size of 3
+        CompletableFuture.supplyAsync(() ->
+                produceEgg(randomFactory(stuffed), randomChocolateType(), withAlcohol(containsAlcohol)), executor)
+                // and we can be called-back when the process ran inside a CompletableFuture finishes and
+                // return some result when want to process, like here the produced eggs
+                .thenAcceptAsync(egg -> {
+                  logger.debug("add egg to package");
+                  boolean eggAdded;
+                  if (PackagingType.isHollowEggPackaging(packagingType)) {
+                    eggAdded = packaging.getEggs().get(0).addChocolateEgg(egg);
+                  } else {
+                    eggAdded = packaging.addChocolateEgg(egg);
+                  }
+                  logger.info("{} egg has{}been produced.",
+                          egg.getChocolateType(), eggAdded ? " " : " not ");
+                }, executor)
+                .exceptionally(e -> {
+                  // we need to check here if no exception has been raised from the execution the
+                  // the future. Exception raised inside the body of supplyAsync and thenAcceptAsync
+                  // won't show up anywhere unless we catch them with this "exceptionally" method
+                  logger.error("Something bad happen", e);
+                  return null;
+                });
+      }
 
-    switch (packagingType.id()){
-
-      case(1): // Regular box
-                prepareStrategy(new RegularBoxStrategy(this));
-                break;
-      case(2): prepareStrategy(new MixedBoxStrategy(this));
-                break;
-      case(3): prepareStrategy(new RegularHollowEggStrategy(this));
-                break;
-      case(4): prepareStrategy(new MixedHollowEggStrategy(this));
-                break;
-
+      // we need to wait to ensure all tasks submitted to the executor (pool of threads)
+      // have been completed in any way (either with success or with an exception)
+      //if we do not wait, then tasks may take longer to complete and the method may return
+      //       before they finished, so before the eggs are produced and packed.
+      try {
+        executor.awaitTermination(30, TimeUnit.SECONDS);
+      } catch (InterruptedException e) {
+        logger.error("Interrupted while waiting completion of all submitted tasks to executor", e);
+      }
+      executor.shutdown();
+      logger.debug("exiting");
     }
+}
 
-  }
 
-  private void prepareStrategy(PrepareStrategy strategy) {
-    strategy.prepare();
-  }
+
+//  private void prepareStrategy(PrepareStrategy strategy) {
+//    strategy.prepare();
+//  }
 
   public HollowEggFactory getHollowEggFactory() {
     return hollowEggFactory;
   }
 
-
   public StuffedEggFactory getStuffedEggFactory() {
     return stuffedEggFactory;
   }
 
-
-//     if (PackagingType.isHollowEggPackaging(packagingType)) {
-//    packaging.addChocolateEgg(produceEgg(hollowEggFactory, randomChocolateType(), false));
-//  }
-//
-//    for (int i = 0; i < quantity; i++) {
-//    // CompletableFutures are sorts of threads that can be easily created on the fly to process
-//    // long running tasks, as the produceEgg method. We also pass the executor where we created
-//    // a pool of threads with a given size of 3
-//    CompletableFuture.supplyAsync(() ->
-//            produceEgg(randomFactory(stuffed), randomChocolateType(), withAlcohol(containsAlcohol)), executor)
-//            // and we can be called-back when the process ran inside a CompletableFuture finishes and
-//            // return some result when want to process, like here the produced eggs
-//            .thenAcceptAsync(egg -> {
-//              logger.debug("add egg to package");
-//              boolean eggAdded;
-//              if (PackagingType.isHollowEggPackaging(packagingType)) {
-//                eggAdded = packaging.getEggs().get(0).addChocolateEgg(egg);
-//              } else {
-//                eggAdded = packaging.addChocolateEgg(egg);
-//              }
-//              logger.info("{} egg has{}been produced.",
-//                      egg.getChocolateType(), eggAdded ? " " : " not ");
-//            }, executor)
-//            .exceptionally(e -> {
-//              // we need to check here if no exception has been raised from the execution the
-//              // the future. Exception raised inside the body of supplyAsync and thenAcceptAsync
-//              // won't show up anywhere unless we catch them with this "exceptionally" method
-//              logger.error("Something bad happen", e);
-//              return null;
-//            });
-//  }
-
-  // we need to wait to ensure all tasks submitted to the executor (pool of threads)
-  // have been completed in any way (either with success or with an exception)
-  // if we do not wait, then tasks may take longer to complete and the method may return
-  // before they finished, so before the eggs are produced and packed.
-//    try {
-//    executor.awaitTermination(30, TimeUnit.SECONDS);
-//  } catch (InterruptedException e) {
-//    logger.error("Interrupted while waiting completion of all submitted tasks to executor", e);
-//  }
-//    executor.shutdown();
-//    logger.debug("exiting");
   /**
    * Stop the production of all eggs in this order. Some eggs may have been produced and added into
    * the packaging linked to this order.
@@ -187,56 +195,56 @@ public class PreparingOrder extends Order {
     return isFinished() ? packaging : null;
   }
 
-//  /**
-//   * Helper method to produce an egg.
-//   *
-//   * @param factory the factory needed to create an egg
-//   * @param type the chocolate type
-//   * @param containsAlcohol if this chocolate may contain alcohol or not
-//   * @return the produced egg by given factory
-//   */
-//  private ChocolateEgg produceEgg(ChocolateEggFactory factory, ChocolateType type,
-//      boolean containsAlcohol) {
-//    logger.debug("produce egg with factory {} of type {} with{} alcohol",
-//        factory.getClass().getSimpleName(), type.name(), containsAlcohol ? "" : "out");
-//    try {
-//      // add a sleep to simulate some preparation time and therefore longer tasks
-//      Thread.sleep(ThreadLocalRandom.current().nextInt(2000));
-//    } catch (InterruptedException e) {
-//      logger.error("Interrupted while producing an egg", e);
-//    }
-//    return factory.createChocolateEgg(type, containsAlcohol);
-//  }
-//
-//  /**
-//   * Get a random egg factory
-//   *
-//   * @return an egg factory
-//   */
-//  private ChocolateEggFactory randomFactory(boolean stuffed) {
-//    return ThreadLocalRandom.current().nextInt() % 2 == 0 && stuffed ?
-//        stuffedEggFactory : hollowEggFactory;
-//  }
-//
-//  /**
-//   * Get a random chocolate type if packaging allows it
-//   *
-//   * @return a random chocolate type, or this order chocolate type if packaging type requires it
-//   * @see PackagingType
-//   */
-//  private ChocolateType randomChocolateType() {
-//    return packagingType.equals(PackagingType.MIXED_BOX)
-//        || packagingType.equals(PackagingType.MIXED_HOLLOW_EGG) ?
-//        ChocolateType.values()[ThreadLocalRandom.current().nextInt(ChocolateType.values().length)]
-//        : chocolateType;
-//  }
-//
-//  /**
-//   * Randomize the chance to have an alcoholic egg when the order allows to have some
-//   *
-//   * @param containsAlcohol some eggs may contain alcohol
-//   * @return always false if containsAlcohol is false, randomly true otherwise
-//   */
+  /**
+   * Helper method to produce an egg.
+   *
+   * @param factory the factory needed to create an egg
+   * @param type the chocolate type
+   * @param containsAlcohol if this chocolate may contain alcohol or not
+   * @return the produced egg by given factory
+   */
+  private ChocolateEgg produceEgg(ChocolateEggFactory factory, ChocolateType type,
+      boolean containsAlcohol) {
+    logger.debug("produce egg with factory {} of type {} with{} alcohol",
+        factory.getClass().getSimpleName(), type.name(), containsAlcohol ? "" : "out");
+    try {
+      // add a sleep to simulate some preparation time and therefore longer tasks
+      Thread.sleep(ThreadLocalRandom.current().nextInt(2000));
+    } catch (InterruptedException e) {
+      logger.error("Interrupted while producing an egg", e);
+    }
+    return factory.createChocolateEgg(type, containsAlcohol);
+  }
+
+  /**
+   * Get a random egg factory
+   *
+   * @return an egg factory
+   */
+  private ChocolateEggFactory randomFactory(boolean stuffed) {
+    return ThreadLocalRandom.current().nextInt() % 2 == 0 && stuffed ?
+        stuffedEggFactory : hollowEggFactory;
+  }
+
+  /**
+   * Get a random chocolate type if packaging allows it
+   *
+   * @return a random chocolate type, or this order chocolate type if packaging type requires it
+   * @see PackagingType
+   */
+  private ChocolateType randomChocolateType() {
+    return packagingType.equals(PackagingType.MIXED_BOX)
+        || packagingType.equals(PackagingType.MIXED_HOLLOW_EGG) ?
+        ChocolateType.values()[ThreadLocalRandom.current().nextInt(ChocolateType.values().length)]
+        : chocolateType;
+  }
+
+  /**
+   * Randomize the chance to have an alcoholic egg when the order allows to have some
+   *
+   * @param containsAlcohol some eggs may contain alcohol
+   * @return always false if containsAlcohol is false, randomly true otherwise
+   */
   private boolean withAlcohol(boolean containsAlcohol) {
     return ThreadLocalRandom.current().nextInt() % 2 == 0 && containsAlcohol;
   }

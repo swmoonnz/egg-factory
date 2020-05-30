@@ -89,7 +89,7 @@ public class RegularBoxStrategy implements PrepareStrategy {
      *
      * @return an egg factory
      */
-    private ChocolateEggFactory getNextFactory(boolean stuffed) {
+    public ChocolateEggFactory getNextFactory(boolean stuffed) {
         if(factoryIndex % numberOfFillings != 0 && stuffed) {
             factoryIndex ++;
             return preparingOrder.getStuffedEggFactory();
@@ -99,4 +99,6 @@ public class RegularBoxStrategy implements PrepareStrategy {
             return preparingOrder.getHollowEggFactory();
         }
     }
+
+
 }
