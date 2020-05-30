@@ -86,37 +86,6 @@ public class Packaging {
           + " hollow egg.");
     }
     return sortEggs(eggs, egg);
-//    ListIterator<ChocolateEgg> eggItr = eggs.listIterator();
-//    ChocolateEgg previous;
-//    ChocolateEgg next;
-//    Integer index = 1;
-//
-//    if (eggs.size() == 0) {
-//      return eggs.add(egg);
-//    }
-//    else {
-//      previous = eggItr.next();
-//      System.out.println("HEEEEEEEEEEERE");
-//      if (!previous.compareChocolate(egg)) {
-//        eggs.add(0, egg);
-//        return true;
-//      }
-//      else {
-//        while (eggItr.hasNext()) {
-//          next = eggItr.next();
-//          System.out.println("Second -------------------");
-//          if (!(previous.compareChocolate(egg)) && !(next.compareChocolate(egg))) { //broken
-//            eggs.add(index, egg);
-//            return true;
-//          }
-//          else{
-//            index ++;
-//            previous = next;
-//          }
-//        }
-//      }
-//    }
-//    return eggs.add(egg);
   }
 
   /**

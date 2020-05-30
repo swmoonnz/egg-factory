@@ -25,7 +25,6 @@ public class Util {
         }
         else {
             previous = eggItr.next();
-            System.out.println("HEEEEEEEEEEERE");
             if (!previous.compareChocolate(egg)) {
                 content.add(0, egg);
                 return true;
@@ -33,7 +32,6 @@ public class Util {
             else {
                 while (eggItr.hasNext()) {
                     next = eggItr.next();
-                    System.out.println("Second -------------------");
                     if (!(previous.compareChocolate(egg)) && !(next.compareChocolate(egg))) { //broken
                         content.add(index, egg);
                         return true;

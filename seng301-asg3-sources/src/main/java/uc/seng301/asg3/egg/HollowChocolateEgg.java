@@ -67,33 +67,6 @@ public class HollowChocolateEgg extends ChocolateEgg {
     Integer index = 1;
 
     return sortEggs(content, egg);
-
-/*    if (content.size() == 0) {
-      return content.add(egg);
-    }
-    else {
-      previous = contentItr.next();
-      System.out.println("HEEEEEEEEEEERE");
-      if (!previous.compareChocolate(egg)) {
-        content.add(0, egg);
-        return true;
-      }
-      else {
-        while (contentItr.hasNext()) {
-          next = contentItr.next();
-          System.out.println("Second -------------------");
-          if (!(previous.compareChocolate(egg)) && !(next.compareChocolate(egg))) { //broken
-            content.add(index, egg);
-            return true;
-          }
-          else{
-            index ++;
-            previous = next;
-          }
-        }
-      }
-    }
-    return content.add(egg);*/
   }
 
   /**
