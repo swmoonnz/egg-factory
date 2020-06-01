@@ -20,7 +20,6 @@
 package uc.seng301.asg3.egg;
 
 import java.util.List;
-import uc.seng301.asg3.ingredient.Ingredient;
 
 /**
  * This abstract class deals with common behavioural features of all chocolate eggs. <br>
@@ -89,19 +88,15 @@ public abstract class ChocolateEgg {
     if (this.toString().length() == 25 && egg.toString().length() == 25) {
       if (this.getChocolateType().equals(egg.getChocolateType())) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
-    }
-    else if (this.toString().length () != egg.toString().length()) {
+    } else if (this.toString().length() != egg.toString().length()) {
       return false;
-    }
-    else {
+    } else {
       if (this.getChocolateType().equals(egg.getChocolateType()) && this.toString().charAt(6) == egg.toString().charAt(6)) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
     }

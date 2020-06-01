@@ -20,13 +20,11 @@
 package uc.seng301.asg3.egg;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uc.seng301.asg3.ingredient.Filling;
-import uc.seng301.asg3.order.PreparingOrder;
 
 /**
  * A StuffedChocolateFactory allows to produce stuffed eggs.
