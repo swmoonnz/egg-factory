@@ -29,7 +29,7 @@ for creating families of related object, while letting the subclasses HollowEggF
 
 
 
-### Pattern 2 -  ??
+### Pattern 2 -  Command Pattern
 
 - What pattern is it? Command Pattern
 - What is its goal in the code? To encapsulate a request, in this case an order, as an object.
@@ -47,7 +47,7 @@ for creating families of related object, while letting the subclasses HollowEggF
 | Invoker               | Counter               |
 | Client                | App                   |
 
-### Pattern 3 - ??
+### Pattern 3 - Composite Pattern
 
 - What pattern is it? Composite Pattern
 - What is its goal in the code? 
