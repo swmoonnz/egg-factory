@@ -20,9 +20,7 @@
 package uc.seng301.asg3.packaging;
 
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import uc.seng301.asg3.egg.ChocolateEgg;
 import static uc.seng301.asg3.utils.Util.sortEggs;
