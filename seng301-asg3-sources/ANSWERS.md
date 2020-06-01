@@ -110,4 +110,7 @@ without exposing its underlying representation.
 
 | GoF element           | Code element          |
 |-----------------------|-----------------------|
-|                       |                       |
+| Collection            | List                  |
+| ConcreteCollection    | ArrayList             |
+| ConcreteIterator      | EggIterator           |
+| Client                | Packaging             |
